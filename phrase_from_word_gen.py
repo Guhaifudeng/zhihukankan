@@ -1,7 +1,7 @@
 #encoding:utf-8
 import codecs
 import numpy as np
-
+import math
 from sklearn.feature_extraction.text import TfidfTransformer
 def gen_topic_word_tfidf(question_file,question_topic_file,
         word_keys_file,topic_keys_file,out_tfidf_global_file,out_idf_global_file):
@@ -48,14 +48,16 @@ def gen_topic_word_tfidf(question_file,question_topic_file,
     freq_word = np.zeros(len(set_word))
 
     count = 0
-    t_w_arr = np.zeros((len(set_topic),len(set_word)),dtype=bool)
+    t_w_arr = np.zeros((len(set_topic),len(set_word)))
+    print(t_w_arr)
     while True:
         line = question_read.readline()
         if not line:
             print('read q finished !')
+            print('count is %d' % count)
             break
         count += 1
-        if count % 10000 ==0:
+        if count % 10 ==0:
             print('dealt question : %d' % count)
         q_id,_,q_vec,_,n_vec = line.split('\t')
         q_word_list = q_vec.strip().split(',')
@@ -67,12 +69,15 @@ def gen_topic_word_tfidf(question_file,question_topic_file,
                 w_ind = set_word[word]
                 freq_word[w_ind] += 1
             else:
+                print("error")
+                print(word)
                 continue
             #print(t_arr)
             for topic in t_arr:
                 t_ind = set_topic[topic]
+                t_w_arr[t_ind][w_ind] = 1
 
-                t_w_arr[t_ind][w_ind] = True
+    print(t_w_arr[:,1])
     print("load question-train finished")
     print("compute the bag of words finished")
     #idf
@@ -83,13 +88,14 @@ def gen_topic_word_tfidf(question_file,question_topic_file,
     tfidf_global_write.write(tmp[1:])
 
     idf = np.sum(t_w_arr,axis=0)
-    idf = np.divide(idf,1.0*len(set_topic))
+    idf = np.log(np.divide(len(set_topic),idf))
+    print(idf[1:2000])
     for j in range(len(set_word)):
         tmp += '\t'+ str(idf[j])
     idf_write.write(tmp[1:])
     idf_write.flush()
     print("output the idf of words finished")
-    
+
 
     #compute TF-IDF
     # print(idf)
@@ -122,9 +128,10 @@ def gen_topic_word_tfidf(question_file,question_topic_file,
     #         tmp += '\t'+ str(tfidf_arr[i,j])
     #     tfidf_w.write(tmp[1:])
     # print("compute the tf-idf of words finished")
-
+def func(i,len):
+    return
 if __name__ == "__main__":
-    question_file = '../data/question_train_set.txt'
+    question_file = '../data/tiny_question_train_set.txt'
     question_topic_file = '../data/question_topic_train_set.txt'
     word_keys_file = '../out/word_keys.txt'
     topic_keys_file ='../out/topic_keys.txt'
