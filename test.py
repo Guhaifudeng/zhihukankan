@@ -2,23 +2,23 @@
 
 # import codecs
 # from sklearn.feature_extraction.text import TfidfTransformer
-import numpy as np
-a = np.zeros((200,400),dtype= bool)
-a[4][5] = True
-print(a.dtype)
-# #doukeyi
-tmp = np.sum(a,axis=1)
-print(tmp.dtype)
-print(tmp)
-def remove_inf(i):
-    if i == float("inf"):
-        return 0
-    return i
-idf = np.log(np.divide(50*1.0,tmp))
-idf = np.array(map(lambda x:remove_inf(x),idf))
-print(idf.dtype)
-print(idf)
-np.set_printoptions(threshold='nan')  
+# import numpy as np
+# a = np.zeros((200,400),dtype= bool)
+# a[4][5] = True
+# print(a.dtype)
+# # #doukeyi
+# tmp = np.sum(a,axis=1)
+# print(tmp.dtype)
+# print(tmp)
+# def remove_inf(i):
+#     if i == float("inf"):
+#         return 0
+#     return i
+# idf = np.log(np.divide(50*1.0,tmp))
+# idf = np.array(map(lambda x:remove_inf(x),idf))
+# print(idf.dtype)
+# print(idf)
+# np.set_printoptions(threshold='nan')  
 # import numpy as np
 # import matplotlib.pyplot as plt
 # from matplotlib import mlab
@@ -30,3 +30,6 @@ np.set_printoptions(threshold='nan')
 # hello = 'sdfs\thhs\tsfsds'
 # _,_,a = hello.split('\t')
 # print(a)
+a = 1
+a += int(True)
+print(a)

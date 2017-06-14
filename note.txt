@@ -1,2 +1,0 @@
-count of words in word_embedding_file 411720
-count of topic in topic_info 2000 ;included " "
