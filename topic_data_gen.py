@@ -28,13 +28,7 @@ def gen_topic_key(topic_file,topic_key_file,has_head = False):
                     topic.add(tp)
 
         #print(t_key)
-        ind = 0
-        for tp in topic:
-            ind += 1
-            print(ind,tp)
-            t_key += '\t' + tp
-
-        t_write.write(t_key[1:])
+        t_write.write('\t'.join(tp))
         print("count of topic in topic_info %d" % len(topic))
     print("finished !")
     print(ind)

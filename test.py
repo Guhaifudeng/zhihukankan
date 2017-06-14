@@ -2,21 +2,31 @@
 
 # import codecs
 # from sklearn.feature_extraction.text import TfidfTransformer
-# import numpy as np
-# a = np.ones((20,40))#dtype= bool)
-# a[4][5] = 1
-# #doukeyi
-# tmp = np.sum(a,axis=1)
-
-# print(tmp)
-# idf = np.divide(tmp, 50)
-# print(idf)
-
 import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib import mlab
-from matplotlib import rcParams
-fig1 = plt.figure(2)
-rects =plt.bar(left = (0.2,1),height = (1,0.5),width = 0.2,align="center",yerr=0.000001)
-plt.title('Pe')
-plt.show()
+a = np.zeros((200,400),dtype= bool)
+a[4][5] = True
+print(a.dtype)
+# #doukeyi
+tmp = np.sum(a,axis=1)
+print(tmp.dtype)
+print(tmp)
+def remove_inf(i):
+    if i == float("inf"):
+        return 0
+    return i
+idf = np.log(np.divide(50*1.0,tmp))
+idf = np.array(map(lambda x:remove_inf(x),idf))
+print(idf.dtype)
+print(idf)
+np.set_printoptions(threshold='nan')  
+# import numpy as np
+# import matplotlib.pyplot as plt
+# from matplotlib import mlab
+# from matplotlib import rcParams
+# fig1 = plt.figure(2)
+# rects =plt.bar(left = (0.2,1),height = (1,0.5),width = 0.2,align="center",yerr=0.000001)
+# plt.title('Pe')
+# plt.show()
+# hello = 'sdfs\thhs\tsfsds'
+# _,_,a = hello.split('\t')
+# print(a)
