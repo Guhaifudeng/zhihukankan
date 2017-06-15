@@ -1,2 +1,2 @@
-git commit -a -m 'tfidf-0'
+git commit -a -m 'knn train data'
 git push origin master

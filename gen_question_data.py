@@ -2,7 +2,7 @@
 import codecs
 import os
 import random
-def extract_question_wordembedding(quesiton_train_file, out_question_file):
+def extract_question_wordseq(quesiton_train_file, out_question_file):
     quesitons = []
 
     q_write = codecs.open(out_question_file,'w','utf-8')
@@ -46,7 +46,7 @@ def random_extract_question(question_file,extract_question_file,extract_question
             q_id,q_c,q_w,note_c,note_w = line.split('\t')
             if extract_ind == rand_ind:
                 count += 1
-                q_write.write(q_id + '\t' + q_w +'\t'+note_w)
+                q_write.write(q_id + '\t' + q_w +'\t'+note_w+'\n')
             if count >= extract_question_count:
                 break
             if extract_ind >= max_rand_int:
@@ -58,5 +58,5 @@ def random_extract_question(question_file,extract_question_file,extract_question
 
 if __name__ == '__main__':
     #extract_question_wordembedding('H:/python35code/zhihutopic/data/question_train_set.txt',r'../out/question_word_extract.txt')
-    random_extract_question('../data/question_train_set.txt','../out/random_10000_question.txt')
+    random_extract_question('../data/question_train_set.txt','../out/random_10000_question.txt',extract_question_count= 40000)
 

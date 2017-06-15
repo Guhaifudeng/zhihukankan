@@ -20,7 +20,7 @@ def gen_word_key(word_embedding_file,word_key_file,has_head = False):
                 print('load word count %d' % count)
             w_key += '\t' + line.strip().split(" ")[0]
             #print(w_key)
-        w_write.write(w_key[1:])
+        w_write.write(w_key[1:]+'\n')
         print("count of words in word_embedding_file %d" % count)
     print("finished !")
 
@@ -33,7 +33,7 @@ def gen_word_key_after_removed(word_idf_map, word_key_after_removed_file):
         for key in rm_list:
             word_idf_map.pop(key)
         word_key = word_idf_map.keys()
-        w_write.writelines('\t'.join(word_key))
+        w_write.write('\t'.join(word_key)+'\n')
         w_write.close()
 def gen_word_tfidf_after_removed(word_keys_tfidf_after_removed_file,word_tfidf_map,word_keys):
     with codecs.open(word_keys_tfidf_after_removed_file,'w','utf-8') as w_tfidf_write:
@@ -43,8 +43,8 @@ def gen_word_tfidf_after_removed(word_keys_tfidf_after_removed_file,word_tfidf_m
             if key  in word_keys:
                 word_keys.append(key)
                 word_tfidf.append(tfidf)
-        w_tfidf_write.writelines('\t'.join(word_keys))
-        w_tfidf_write.writelines('\t'.join(word_tfidf))
+        w_tfidf_write.write('\t'.join(word_keys)+'\n')
+        w_tfidf_write.write('\t'.join(word_tfidf)+'\n')
         w_tfidf_write.close()
 
 if __name__ == '__main__':

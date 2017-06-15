@@ -11,8 +11,9 @@ def build_word2vec_hashmap(word_embedding_file, has_head = False):
     with codecs.open(word_embedding_file, 'r', 'utf-8') as w_read:
         count = 0
         while True:
+            line = w_read.readline()
             if not line:
-                print("load word2vec finished")
+                print("load %s finished" % word_embedding_file)
                 break
             if has_head:
                 word_count, word_embedding_dimension = line.strip().split(' ')
@@ -46,8 +47,8 @@ def build_word_idf_hashmap(word_idf_file, has_head = False):
         line_keys = idf_read.readline().strip().split('\t')
         line_idf = idf_read.readline().strip().split('\t')
         for key,idf in zip(line_keys, line_idf):
-            dict_word_idf[key] = idf
-    print('word idf map finished')
+            dict_word_idf[key] = float(idf)
+    print('word %s finished' % word_idf_file)
     return dict_word_idf
 
 
@@ -57,8 +58,8 @@ def build_word_tfidf_hashmap(word_tfidf_file, has_head = False):
         line_keys = tfidf_read.readline().strip().split('\t')
         line_tfidf = tfidf_read.readline().strip().split('\t')
         for key,tfidf in zip(line_keys, line_tfidf):
-            dict_word_tfidf[key] = tfidf
-    print('word tfidf map finished')
+            dict_word_tfidf[key] = float(tfidf)
+    print('word %s finished !'% word_tfidf_file)
     return dict_word_tfidf
 
 def build_word_keys_hashmap(word_keys_file,has_head = False,index = False):
@@ -70,7 +71,7 @@ def build_word_keys_hashmap(word_keys_file,has_head = False,index = False):
         for key in line_list:
             set_word[key] = ind
             ind += int(index)
-        print("load word key map finished")
+        print("load %s finished" % word_keys_file)
     return build_word_keys_hashmap
 
 if __name__ == '__main__':

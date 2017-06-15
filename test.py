@@ -30,6 +30,6 @@
 # hello = 'sdfs\thhs\tsfsds'
 # _,_,a = hello.split('\t')
 # print(a)
-a = 1
-a += int(True)
-print(a)
+a = [1.00000000,1.232323]
+a = [str(e) for e in a]
+print(','.join(a))
