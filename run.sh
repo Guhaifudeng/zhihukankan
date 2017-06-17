@@ -1,2 +1,2 @@
-git commit -a -m 'knn train data'
+git commit -a -m 'knn model-pre'
 git push origin master

@@ -25,6 +25,31 @@ def transform_wordseq_to_phrase_weighted(word_seq,word2vec_map,word_weighted_val
             phrase_distributed += [word2vec_elem*weight for  word2vec_elem in word2vec_map[word]]
         #print('2') 
     return phrase_distributed
+def build_questions_vector_hashmap(phrase_embedding_file,question_count,has_head = False):
+    dict_prase_vec = {}
+    with codecs.open(phrase_embedding_file, 'r', 'utf-8') as p_read:
+        count  = 0
+        while True:
+            line = p_read.readline()
+            if not line:
+                print('load %s finised' % phrase_embedding_file)
+                break
+            if has_head:
+                pass
+                has_head = False
+                continue
+            count += 1
+            if count % 1000 == 0:
+                print('load phrase count %d' % count)
+            phrase_id, phrase_vec= line.split('\t')
+            phrase_vec = [float(i) for i in phrase_vec.split(',')]
+            dict_prase_vec[phrase_id] = phrase_vec
+            if count >= question_count:
+                break
+    print(count)
+    return dict_prase_vec
+
+
 
 if __name__ == "__main__":
     question_40000_file = '../out/random_40000_question.txt'
