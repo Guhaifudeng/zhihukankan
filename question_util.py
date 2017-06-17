@@ -23,7 +23,7 @@ def transform_wordseq_to_phrase_weighted(word_seq,word2vec_map,word_weighted_val
             #print(word_weighted_value[word])
             weight = word_weighted_value[word]
             phrase_distributed += [word2vec_elem*weight for  word2vec_elem in word2vec_map[word]]
-        #print('2') 
+        #print('2')
     return phrase_distributed
 def build_questions_vector_hashmap(phrase_embedding_file,question_count,has_head = False):
     dict_prase_vec = {}
@@ -40,7 +40,7 @@ def build_questions_vector_hashmap(phrase_embedding_file,question_count,has_head
                 continue
             count += 1
             if count % 1000 == 0:
-                print('load phrase count %d' % count)
+                print('load train sample %s' % count)
             phrase_id, phrase_vec= line.split('\t')
             phrase_vec = [float(i) for i in phrase_vec.split(',')]
             dict_prase_vec[phrase_id] = phrase_vec
@@ -48,7 +48,20 @@ def build_questions_vector_hashmap(phrase_embedding_file,question_count,has_head
                 break
     print(count)
     return dict_prase_vec
-
+def bulid_question_topic_hashmap(question_topic_file, has_head = False):
+    dict_question_topic = {}
+    with codecs.open(question_topic_file,'r', 'utf-8') as question_topic_read:
+        #no head
+        while True:
+            line = question_topic_read.readline()
+            if not line:
+                print('read q_t finished !')
+                break
+            q_id, t_s = line.split('\t')
+            t_arr = t_s.strip().split(',')
+            dict_question_topic[q_id] = t_arr
+    print('load %s finished' % question_topic_file)
+    return dict_question_topic
 
 
 if __name__ == "__main__":
@@ -66,12 +79,12 @@ if __name__ == "__main__":
     word_weighted_tfidf = word_util.build_word_tfidf_hashmap(word_tfidf_file)
     word_keys_file = '../out/word_keys.txt'
     word_keys = word_util.build_word_keys_hashmap(word_keys_file)
-    
+
     p_write = codecs.open(question_40000_phrase_distributed_file, 'w', 'utf-8')
     #eval_write = codecs.open(filename)
     #train_write = codecs.open(question_train_phrase_vector_file, 'w','utf-8')
     eval_write = codecs.open(question_eval_phrase_vector_file, 'w', 'utf-8')
-        
+
     count = 0
     with codecs.open(question_40000_file, 'r', 'utf-8') as train_read:
         while True:
@@ -130,7 +143,7 @@ if __name__ == "__main__":
             #print(q_w)
             q_w = [str(e) for e in q_w.tolist()]
             eval_write.write(q_id +'\t' + ','.join(q_w)+'\n')
-            count +=1 
+            count +=1
             if count % 10000 == 0:
                 print('eval transform count: %d' % count)
     print('eval set finised')
