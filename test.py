@@ -42,13 +42,25 @@ import numpy as np
 # dist, ind = tree.query([X[0]], k=3)
 # print(ind)  # indices of 3 closest neighbors
 # print(dist)  # distances to 3 closest neighbors
-a = np.random.randint(0,5,5)
-b = np.random.randint(0,9,5)
-print(a)
-print(b)
-d = np.argsort(-b)
-print(d)
-print(b[d])
-c = a > b
-print(c)
-print(a[c])
+# a = np.random.randint(0,5,5)
+# b = np.random.randint(0,9,5)
+# print(a)
+# print(b)
+# d = np.argsort(-b)
+# print(d)
+# print(b[d])
+# c = a > b
+# print(c)
+# print(a[c])
+
+A = np.array([[1.0,3,8],[111,1222,311]])
+print(A)
+print(A/2)
+for i in range(A.shape[0]):
+    print(A[i,:])
+
+    A[i,:] = (2+A[i,:]) / (2*3+np.add.reduce(A[i,:]))
+    print(A[i,:])
+print(A)
+
+

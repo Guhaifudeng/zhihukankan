@@ -74,10 +74,10 @@ if __name__ == "__main__":
     tree_in.close()
     print('load pickle finished!')
 
-    mlknn_out = open('../out/ml_knn.pkl','wb')
+    mlknn_out = open('../out/ml_knn2.pkl','wb')
     ph_has_t,ph_has_no_t = compute_priror_probabilities_pH_class2000(phrase_topic_mat)
     print('---ph finished')
-    has_ti_gma_p, has_no_ti_gma_p = compute_posterior_probabilities_pEH_class2000_mul_k2001(phrase_topic_mat, phrase_ind_mat)
+    has_ti_gma_p, has_no_ti_gma_p = compute_posterior_probabilities_pEH_class2000_mul_k2001(phrase_topic_mat, phrase_ind_mat[:,1:])
     pickle.dump(ph_has_t, mlknn_out,-1) #0
     pickle.dump(ph_has_no_t, mlknn_out,-1) #1
     pickle.dump(has_ti_gma_p, mlknn_out,-1) #2
