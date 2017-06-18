@@ -18,7 +18,7 @@
 # idf = np.array(map(lambda x:remove_inf(x),idf))
 # print(idf.dtype)
 # print(idf)
-# np.set_printoptions(threshold='nan')  
+# np.set_printoptions(threshold='nan')
 # import numpy as np
 # import matplotlib.pyplot as plt
 # from matplotlib import mlab
@@ -36,9 +36,19 @@
 
 
 import numpy as np
-np.random.seed(0)
-X = np.random.random((10, 3))  # 10 points in 3 dimensions
-tree = KDTree(X, leaf_size=2)              
-dist, ind = tree.query([X[0]], k=3)                
-print(ind)  # indices of 3 closest neighbors
-print(dist)  # distances to 3 closest neighbors
+# np.random.seed(0)
+# X = np.random.random((10, 3))  # 10 points in 3 dimensions
+# tree = KDTree(X, leaf_size=2)
+# dist, ind = tree.query([X[0]], k=3)
+# print(ind)  # indices of 3 closest neighbors
+# print(dist)  # distances to 3 closest neighbors
+a = np.random.randint(0,5,5)
+b = np.random.randint(0,9,5)
+print(a)
+print(b)
+d = np.argsort(-b)
+print(d)
+print(b[d])
+c = a > b
+print(c)
+print(a[c])
