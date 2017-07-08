@@ -22,13 +22,13 @@ def gen_topic_key(topic_file,topic_key_file,has_head = False):
 
             topic.add(tp_list[0])
             tp_str = tp_list[1]
-            if tp_list[0] != 'c':
+            if len(tp_list)==0 or tp_list[0] != 'c':
                 tp_2 = tp_list[1].strip().split(',')
                 for tp in tp_2:
                     topic.add(tp)
 
         #print(t_key)
-        t_write.write('\t'.join(tp)+'\n')
+        t_write.write('\t'.join(topic)+'\n')
         
         print("count of topic in topic_info %d" % len(topic))
     print("finished !")

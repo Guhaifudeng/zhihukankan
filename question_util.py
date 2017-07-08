@@ -4,6 +4,7 @@ import numpy as np
 import codecs
 def transform_wordseq_to_phrase_weighted(word_seq,word2vec_map,word_weighted_value = None,word_keys = None):
     phrase_distributed = np.zeros(256)
+    word_freq = {}
     for word in word_seq:
         #print("0")
         if not word_keys:
@@ -21,10 +22,18 @@ def transform_wordseq_to_phrase_weighted(word_seq,word2vec_map,word_weighted_val
             #print(word_weighted_value[])
             #print(word2vec_map[word])
             #print(word_weighted_value[word])
-            weight = word_weighted_value[word]
-            phrase_distributed += [word2vec_elem*weight for  word2vec_elem in word2vec_map[word]]
+            if word in word_freq:
+                word_freq[word] += 1
+            else:
+                word_freq[word] = 1
+    for word in word_freq:
+        weight = word_weighted_value[word]*word_freq[word]/len(word_freq)
+        phrase_distributed += [word2vec_elem*weight for  word2vec_elem in word2vec_map[word]]
         #print('2')
-    return phrase_distributed
+    sum_vec = np.sum(phrase_distributed**2)
+    if  sum_vec<= 1e-4 and sum_vec >=-1e-4:
+        return phrase_distributed;
+    return np.divide(phrase_distributed,np.sqrt(np.sum(phrase_distributed**2)))
 def build_questions_vector_hashmap(phrase_embedding_file,question_count,has_head = False):
     dict_prase_vec = {}
     with codecs.open(phrase_embedding_file, 'r', 'utf-8') as p_read:
@@ -66,18 +75,18 @@ def bulid_question_topic_hashmap(question_topic_file, has_head = False):
 
 if __name__ == "__main__":
     question_40000_file = '../out/random_40000_question.txt'
-    question_40000_phrase_distributed_file = '../out/random_40000_question_embedding.txt'
+    question_40000_phrase_distributed_file = '../out2/random_40000_question_embedding.txt'
 
     #question_train_file = '../data/question_train_set.txt'
     #question_train_phrase_vector_file = '../out/question_train_phrase_set.txt'
     question_eval_file =  '../data/question_eval_set.txt'
-    question_eval_phrase_vector_file = '../out/question_eval_phrase_set.txt'
+    question_eval_phrase_vector_file = '../out2/question_eval_phrase_set.txt'
 
     word_embedding_file = '../data/word_embedding.txt'
     word2vec_map = word_util.build_word2vec_hashmap(word_embedding_file,has_head=True)
-    word_tfidf_file = '../out/global_tfidf.txt'
+    word_tfidf_file = '../out2/global_idf.txt'
     word_weighted_tfidf = word_util.build_word_tfidf_hashmap(word_tfidf_file)
-    word_keys_file = '../out/word_keys.txt'
+    word_keys_file = '../out2/word_keys.txt'
     word_keys = word_util.build_word_keys_hashmap(word_keys_file)
 
     p_write = codecs.open(question_40000_phrase_distributed_file, 'w', 'utf-8')

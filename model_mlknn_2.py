@@ -61,7 +61,7 @@ def compute_posterior_probabilities_pEH_class2000_mul_k2001(phrase_topic_mat,phr
     print('---all finished')
     return has_ti_count_in_k_p, has_no_ti_count_in_k_p
 if __name__ == "__main__":
-    tree_in = open('../out/kd_tree.pkl','rb')
+    tree_in = open('../out2/kd_tree.pkl','rb')
     topic_ind_key = pickle.load(tree_in) #0
     topic_key_ind = pickle.load(tree_in) #1
     phrase_key_ind = pickle.load(tree_in) #2
@@ -74,7 +74,7 @@ if __name__ == "__main__":
     tree_in.close()
     print('load pickle finished!')
 
-    mlknn_out = open('../out/ml_knn2.pkl','wb')
+    mlknn_out = open('../out2/ml_knn2.pkl','wb')
     ph_has_t,ph_has_no_t = compute_priror_probabilities_pH_class2000(phrase_topic_mat)
     print('---ph finished')
     has_ti_gma_p, has_no_ti_gma_p = compute_posterior_probabilities_pEH_class2000_mul_k2001(phrase_topic_mat, phrase_ind_mat[:,1:])

@@ -1,2 +1,2 @@
-git commit -a -m 'knn model-pre'
+git commit -a -m 'add nmi'
 git push origin master

@@ -4,7 +4,7 @@ import codecs
 import numpy as np
 if __name__ == "__main__":
     np.set_printoptions(threshold=np.inf)
-    mlknn_in = open('../out/ml_knn2.pkl','rb')
+    mlknn_in = open('../out2/ml_knn2.pkl','rb')
     ph_has_t = pickle.load(mlknn_in) #0
     ph_has_no_t = pickle.load(mlknn_in) #1
     has_ti_gma_p = pickle.load(mlknn_in) #2
@@ -15,7 +15,7 @@ if __name__ == "__main__":
     print(ph_has_no_t.shape)
     print(has_ti_gma_p.shape)
     print(has_no_ti_gma_p.shape)
-    tree_in = open('../out/kd_tree.pkl','rb')
+    tree_in = open('../out2/kd_tree.pkl','rb')
     topic_ind_key = pickle.load(tree_in) #0
     topic_key_ind = pickle.load(tree_in) #1
     phrase_key_ind = pickle.load(tree_in) #2
@@ -28,8 +28,8 @@ if __name__ == "__main__":
     tree_in.close()
     print('load pickle finished!')
 
-    question_eval_embedding_file = '../out/question_eval_phrase_set.txt'
-    question_eval_prediction = '../out/question_eval_prediction.txt'
+    question_eval_embedding_file = '../out2/question_eval_phrase_set.txt'
+    question_eval_prediction = '../out2/question_eval_prediction.txt'
     predition_write = codecs.open(question_eval_prediction,'w','utf-8')
     for tmp in has_no_ti_gma_p:
         tmp = [str(e) for e in tmp.tolist()]
@@ -45,7 +45,7 @@ if __name__ == "__main__":
                 break
             q_eval_id,q_eval_vec = line.split('\t')
             q_eval_vec = q_eval_vec.split(',')
-            dist,ind = tree.query([q_eval_vec], k = 2000)
+            dist,ind = tree.query([q_eval_vec], k = 4000)
             #是否包含ti
             #print(ind.shape)
             q_eval_ti= np.add.reduce(phrase_topic_mat[ind[0],:],axis = 0)
@@ -56,16 +56,16 @@ if __name__ == "__main__":
             out_has_or_not_1_EH =np.array([tmp2[tmp1]for tmp1,tmp2 in zip(q_eval_ti,has_ti_gma_p)])
             #print(out_has_or_not_0_EH.shape)
             #print("---2---")
-            print("--1--",out_has_or_not_0_EH)#0.5
-            print("--2--",out_has_or_not_1_EH)#0.005
-            print("--3--",ph_has_t)#0.0005
-            print("--4--",ph_has_no_t)#0.5
+            #print("--1--",out_has_or_not_0_EH)#0.5
+            #print("--2--",out_has_or_not_1_EH)#0.005
+            #print("--3--",ph_has_t)#0.0005
+            #print("--4--",ph_has_no_t)#0.5
             out_has_or_not_0 = np.multiply(out_has_or_not_0_EH,ph_has_no_t)
             out_has_or_not_1 = np.multiply(out_has_or_not_1_EH,ph_has_t)
             out_has_or_not_flag = out_has_or_not_0 < out_has_or_not_1
-            print("-1-",out_has_or_not_0)
-            print("-2-",out_has_or_not_1)
-            print("-3-",out_has_or_not_flag)
+            #print("-1-",out_has_or_not_0)
+            #print("-2-",out_has_or_not_1)
+            #print("-3-",out_has_or_not_flag)
             #包含情况下ti发生的概率顺序
             out_has_or_not_01 = out_has_or_not_0 + out_has_or_not_1
             out_ti_p = np.divide(out_has_or_not_1,out_has_or_not_01)

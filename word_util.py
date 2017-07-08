@@ -63,16 +63,17 @@ def build_word_tfidf_hashmap(word_tfidf_file, has_head = False):
     return dict_word_tfidf
 
 def build_word_keys_hashmap(word_keys_file,has_head = False,index = False):
+    set_word = {}
     with codecs.open(word_keys_file,'r','utf-8') as word_keys_read:
         line = word_keys_read.readline()
         line_list = line.strip().split('\t')
-        set_word = {}
+        
         ind = 0
         for key in line_list:
             set_word[key] = ind
             ind += int(index)
         print("load %s finished" % word_keys_file)
-    return build_word_keys_hashmap
+    return set_word
 
 if __name__ == '__main__':
     # print(build_word2vec_hashmap('../data/word_embedding.txt',has_head= True).popitem())
